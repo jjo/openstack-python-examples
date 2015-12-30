@@ -2,7 +2,7 @@
 # openstack example python-let: neutron-net-list.py
 #
 # Author: JuanJo Ciarlante <juanjosec@gmail.com>
-# License: GPLv3
+# License: http://www.apache.org/licenses/LICENSE-2.0
 # vim: si et sw=4 ts=4
 
 import os
