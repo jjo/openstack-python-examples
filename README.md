@@ -1,10 +1,10 @@
 Openstack API python-lets examples
 ===================================
 
-Some simple examples of openstack API usage from python which
+Some simple examples of openstack API usage from python, which
 mimic their command line equivalents.
 
-Hopefully to help as prototype for more interesting OS applications :)
+Hopefully to also help with prototyping more interesting OS applications :)
 
 All these assume you've already loaded your openstack credentials
 from your ``openrc.sh`` file, namely ``OS_USERNAME``,
