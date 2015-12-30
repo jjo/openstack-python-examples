@@ -17,8 +17,10 @@ def get_creds():
 
 creds = get_creds()
 nova_cli = nova_client.Client(2,
-                              creds['username'], creds['password'],
-                              creds['tenant_name'], creds['auth_url'],
+                              auth_url=creds['auth_url'],
+                              username=creds['username'],
+                              api_key=creds['password'],
+                              project_id=creds['tenant_name'],
                               region_name=creds['region_name'])
 # For each instance, print its id and name
 search_opts = {'all_tenants': 1}

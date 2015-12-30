@@ -17,8 +17,10 @@ def get_creds():
 
 creds = get_creds()
 cinder_cli = cinder_client.Client(1,
-                                  creds['username'], creds['password'],
-                                  creds['tenant_name'], creds['auth_url'],
+                                  auth_url=creds['auth_url'],
+                                  username=creds['username'],
+                                  api_key=creds['password'],
+                                  project_id=creds['tenant_name'],
                                   region_name=creds['region_name'])
 # For each cinder volume, print its id, size and display_name
 for vol in cinder_cli.volumes.list():
