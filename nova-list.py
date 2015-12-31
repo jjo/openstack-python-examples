@@ -6,13 +6,20 @@
 # vim: si et sw=4 ts=4
 
 import os
+import sys
 from novaclient import client as nova_client
 
 
 def get_creds():
-    # create a dictionary as e.g.: {'username': env['OS_USERNAME'], ...
-    return {key: os.environ.get('OS_{}'.format(key.upper())) for key in
-            ('auth_url', 'username', 'password', 'tenant_name', 'region_name')}
+    "return a dictionary as: {'username': os.environ['OS_USERNAME'], ...}"
+    try:
+        return {key: os.environ['OS_{}'.format(key.upper())] for key in
+                ('auth_url', 'username', 'password', 'tenant_name',
+                 'region_name')}
+    except KeyError as e:
+        print >> sys.stderr, ("ERROR: missing from environment: {}, "
+                              "need to load your openrc.sh".format(e))
+        sys.exit(1)
 
 creds = get_creds()
 nova_cli = nova_client.Client(2,
@@ -21,7 +28,7 @@ nova_cli = nova_client.Client(2,
                               api_key=creds['password'],
                               project_id=creds['tenant_name'],
                               region_name=creds['region_name'])
-# For each instance, print its id and name
+# For each instance, print its id, name, etc
 search_opts = {'all_tenants': 1}
 for server in nova_cli.servers.list(search_opts=search_opts):
-    print server.id, server.name
+    print server.id, server.name, server.status, server.networks

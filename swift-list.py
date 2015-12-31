@@ -6,13 +6,20 @@
 # vim: si et sw=4 ts=4
 
 import os
+import sys
 from swiftclient import client as swift_client
 
 
 def get_creds():
-    # create a dictionary as e.g.: {'username': env['OS_USERNAME'], ...
-    return {key: os.environ.get('OS_{}'.format(key.upper())) for key in
-            ('auth_url', 'username', 'password', 'tenant_name', 'region_name')}
+    "return a dictionary as: {'username': os.environ['OS_USERNAME'], ...}"
+    try:
+        return {key: os.environ['OS_{}'.format(key.upper())] for key in
+                ('auth_url', 'username', 'password', 'tenant_name',
+                 'region_name')}
+    except KeyError as e:
+        print >> sys.stderr, ("ERROR: missing from environment: {}, "
+                              "need to load your openrc.sh".format(e))
+        sys.exit(1)
 
 creds = get_creds()
 swift_cli = swift_client.Connection(authurl=creds['auth_url'],
