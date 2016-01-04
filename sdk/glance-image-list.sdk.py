@@ -22,7 +22,7 @@ creds['project_name'] = creds['tenant_name']
 # SDK handles region_name, services versions via profile
 prof = profile.Profile()
 prof.set_region(profile.Profile.ALL, creds['region_name'])
-prof.set_version('image', 'v2')
+prof.set_version('image', 'v1')
 conn = connection.Connection(profile=prof, **creds)
 for image in conn.image.images():
     print image.id, image.name
