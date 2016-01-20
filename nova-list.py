@@ -30,10 +30,11 @@ nova_cli = nova_client.Client(2,
                               region_name=creds['region_name'])
 # For each instance, print below attrs
 search_opts = {'all_tenants': 1}
-attrs = ('id name status user_id tenant_id created OS-SRV-USG:launched_at '
-         'hostId OS-EXT-SRV-ATTR:hypervisor_hostname OS-EXT-STS:power_state '
-         'OS-EXT-STS:power_state flavor networks '
-         'os-extended-volumes:volumes_attached')
+attrs = """
+id name status user_id tenant_id created OS-SRV-USG:launched_at hostId
+OS-EXT-SRV-ATTR:hypervisor_hostname OS-EXT-STS:power_state
+OS-EXT-STS:power_state flavor networks os-extended-volumes:volumes_attached
+"""
 attrs = attrs.split()
 for server in nova_cli.servers.list(search_opts=search_opts):
     print " ".join(map(lambda x: str(getattr(server, x)), attrs))
